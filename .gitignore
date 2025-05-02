@@ -1,0 +1,63 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.eggs/
+dist/
+sdist/
+*.egg-info/
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written into a dist/ subdirectory.
+#  However, if you use the --onefile option, they'll end up in
+#  the root directory.
+/dist
+/build
+
+# dotenv environment variable files
+.env
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# OS generated files #
+######################
+*.DS_Store
+ehthumbs.db
+Thumbs.db
+
+# Temp files
+temp_images/
+instance_*
+
+# Model files (if large)
+*.pth
+*.pt
+*.ckpt
+
+# VS Code files
+.vscode/
+
+# Compiled files
+*.pyc
+*.pyd
+
+# Streamlit uploads
+streamlit_app/uploads/
