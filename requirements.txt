@@ -13,5 +13,5 @@ pandas
 plotly
 numpy
 matplotlib
-opencv-python==4.5.5.64
+opencv-python
 imgaug==0.4.0 
