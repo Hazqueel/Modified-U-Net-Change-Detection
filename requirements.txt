@@ -1,37 +1,22 @@
-# Core requirements
-streamlit==1.32.0
-numpy>=1.24.0,<2.0.0  # Pinned to pre-2.0 due to sctypes removal
-torch==2.1.0
-torchvision==0.16.0
-Pillow==10.1.0
-opencv-python==4.8.1
-matplotlib==3.8.2
-albumentations==1.3.1
-imgaug==0.4.0
-pandas==2.1.0
-plotly==5.18.0
-scikit-learn==1.3.2
-
-# PDF generation
-fpdf2==2.7.7
-
-# Google AI and translation
-google-generativeai==0.3.2
-googletrans==4.0.0-rc1
-
-# Image processing and visualization
-streamlit-image-comparison==0.0.4
-streamlit-drawable-canvas==0.9.3
-
-# Environment management
-python-dotenv==1.0.0
-
-# Additional utilities
-pyyaml==6.0.1
-tqdm==4.66.1
-scipy==1.11.3
-
-# Development extras (optional)
-pytest==7.4.3
-black==23.9.1
-flake8==6.1.0
+streamlit
+numpy
+torch
+torchvision
+Pillow
+opencv-python-headless
+matplotlib
+albumentations
+imgaug
+pandas
+plotly
+scikit-learn
+fpdf2
+google-generativeai
+googletrans
+streamlit-image-comparison
+streamlit-drawable-canvas
+python-dotenv
+nest-asyncio
+pyyaml
+tqdm
+scipy
