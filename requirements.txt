@@ -14,5 +14,5 @@ plotly
 matplotlib
 opencv-python
 opencv-python-headless
-numpy==1.23.5 
+numpy==1.24.4
 imgaug==0.4.0
