@@ -207,13 +207,13 @@ if st.session_state.page == "Main":
         uploaded_file1 = st.file_uploader('Choose the "Before" image', type=['png', 'jpg', 'jpeg'], key='1')
         if uploaded_file1 is not None:
             image1 = Image.open(uploaded_file1)
-            st.image(image1, caption='Before Image', width=600)
+            st.image(image1, caption='Before Image', width=400)
 
     with col3:
         uploaded_file2 = st.file_uploader('Choose the "After" image', type=['png', 'jpg', 'jpeg'], key='2')
         if uploaded_file2 is not None:
             image2 = Image.open(uploaded_file2)
-            st.image(image2, caption='After Image', width=600)
+            st.image(image2, caption='After Image', width=400)
 
     if uploaded_file1 and uploaded_file2:
         # Convert uploaded files to Pillow images
@@ -257,12 +257,12 @@ if st.session_state.page == "Main":
                     predicted_image_path = os.path.join(temp_dir, temp_dir2, 'predicted.png')
                     if os.path.exists(predicted_image_path):
                         predicted_image = Image.open(predicted_image_path)
-                        st.image(predicted_image, caption='Predicted Image',  width=600)
+                        st.image(predicted_image, caption='Predicted Image',  width=400)
                 with col3:
                     result_image_path = os.path.join(temp_dir, temp_dir2, 'result.png')
                     if os.path.exists(result_image_path):
                         result_image = Image.open(result_image_path)
-                        st.image(result_image, caption='Result Image',width=600)
+                        st.image(result_image, caption='Result Image',width=400)
 
                 # ---- Evaluation Metrics Calculation ----
               
@@ -1442,50 +1442,88 @@ def create_metrics_dashboard(metrics_dict):
     
     with tab1:
         # Overview with gauge charts
-        col1, col2, col3 = st.columns(3)
+        col1, col2 = st.columns(2)
         
         with col1:
+            # Accuracy Gauge
             fig = go.Figure(go.Indicator(
                 mode="gauge+number",
                 value=metrics_dict['accuracy'] * 100,
-                title={'text': "Accuracy"},
+                title={'text': "Accuracy", 'font': {'size': 18}},
                 domain={'x': [0, 1], 'y': [0, 1]},
-                gauge={'axis': {'range': [0, 100]},
-                       'bar': {'color': "#2ecc71"},
-                       'steps': [
-                           {'range': [0, 60], 'color': "#ff6b6b"},
-                           {'range': [60, 80], 'color': "#ffd93d"},
-                           {'range': [80, 100], 'color': "#95d5b2"}
-                       ]}
+                gauge={
+                    'axis': {'range': [0, 100], 'tickwidth': 1, 'tickcolor': "black", 'tickmode': 'linear', 'tick0': 0, 'dtick': 10},
+                    'bar': {'color': "#4caf50"},  # Green for accuracy
+                    'steps': [
+                        {'range': [0, 60], 'color': "#ff4d4d"},  # Red
+                        {'range': [60, 80], 'color': "#ffa500"},  # Orange
+                        {'range': [80, 100], 'color': "#4caf50"}  # Green
+                    ],
+                    'threshold': {
+                        'line': {'color': "black", 'width': 4},
+                        'thickness': 0.75,
+                        'value': metrics_dict['accuracy'] * 100
+                    }
+                }
             ))
-            fig.update_layout(height=100, margin=dict(t=30, b=0))
+            fig.update_layout(
+                height=300,
+                margin=dict(t=50, b=0),
+                title_font_size=16
+            )
             st.plotly_chart(fig, use_container_width=True)
-        
+
         with col2:
+            # F1 Score Gauge
             fig = go.Figure(go.Indicator(
                 mode="gauge+number",
                 value=metrics_dict['f1_score'] * 100,
-                title={'text': "F1 Score"},
+                title={'text': "F1 Score", 'font': {'size': 18}},
                 domain={'x': [0, 1], 'y': [0, 1]},
-                gauge={'axis': {'range': [0, 100]},
-                       'bar': {'color': "#3498db"},
-                       'steps': [
-                           {'range': [0, 60], 'color': "#ff6b6b"},
-                           {'range': [60, 80], 'color': "#ffd93d"},
-                           {'range': [80, 100], 'color': "#95d5b2"}
-                       ]}
+                gauge={
+                    'axis': {'range': [0, 100], 'tickwidth': 1, 'tickcolor': "black", 'tickmode': 'linear', 'tick0': 0, 'dtick': 10},
+                    'bar': {'color': "#1e90ff"},  # Blue for F1 Score
+                    'steps': [
+                        {'range': [0, 60], 'color': "#ff4d4d"},  # Red
+                        {'range': [60, 80], 'color': "#ffa500"},  # Orange
+                        {'range': [80, 100], 'color': "#1e90ff"}  # Blue
+                    ],
+                    'threshold': {
+                        'line': {'color': "black", 'width': 4},
+                        'thickness': 0.75,
+                        'value': metrics_dict['f1_score'] * 100
+                    }
+                }
             ))
-            fig.update_layout(height=100, margin=dict(t=30, b=0))
+            fig.update_layout(
+                height=300,
+                margin=dict(t=50, b=0),
+                title_font_size=16
+            )
             st.plotly_chart(fig, use_container_width=True)
+
+        # Add space between sections
+        st.markdown("<br>", unsafe_allow_html=True)
 
         # Change Pattern Analysis
         st.markdown("#### Change Pattern Analysis")
         pattern_data = {
             'Pattern': ['Urban', 'Vegetation', 'Water'],
-            'Percentage': [45, 35, 20]
+            'Percentage': [50, 30, 20]  # Updated random values
         }
-        fig = px.pie(pattern_data, values='Percentage', names='Pattern', 
-                     hole=0.4, title='Change Distribution')
+        fig = px.pie(
+            pattern_data, 
+            values='Percentage', 
+            names='Pattern', 
+            hole=0.4, 
+            title='Change Distribution',
+            color='Pattern',  # Match colors to patterns
+            color_discrete_map={
+            'Urban': '#FF5733',  # Orange-red for Urban
+            'Vegetation': '#4CAF50',  # Green for Vegetation
+            'Water': '#3498DB'  # Blue for Water
+            }
+        )
         fig.update_layout(height=200, margin=dict(t=30, b=0))
         st.plotly_chart(fig, use_container_width=True)
 
@@ -1497,8 +1535,18 @@ def create_metrics_dashboard(metrics_dict):
             'Change Index': [0.2, 0.4, 0.3, 0.6, 0.5]
         })
         fig = px.line(trend_data, x='Date', y='Change Index', 
-                     title='Change Index Over Time')
-        fig.update_layout(height=200, margin=dict(t=30, b=0))
+                 title='Change Index Over Time',
+                 markers=True,  # Add markers for better visualization
+                 line_shape='spline')  # Smooth the line for aesthetics
+        fig.update_traces(line=dict(color='#1f77b4', width=3))  # Customize line color and width
+        fig.update_layout(
+            height=300,  # Adjust height for better fit
+            margin=dict(t=30, b=0),  # Adjust margins
+            xaxis_title="Date",  # Add x-axis title
+            yaxis_title="Change Index",  # Add y-axis title
+            plot_bgcolor='rgba(0,0,0,0)',  # Transparent background
+            paper_bgcolor='rgba(0,0,0,0)'  # Transparent paper background
+        )
         st.plotly_chart(fig, use_container_width=True)
 
         # Confidence Metrics
@@ -1538,13 +1586,17 @@ def create_metrics_dashboard(metrics_dict):
             - Confidence Level: High (75%)
             - Pattern: Linear development
             - Impact: Moderate environmental effect
+
+            
+            Temporal Analysis:
+            - Temporal Change: {temporal_analyzer.analyze_temporal_changes({}).get('temporal_change', 'No significant changes detected')}
             """
             # Provide a download button for the report
             st.download_button(
-            label="📥 Download Analytics Report",
-            data=analytics_report,
-            file_name="analytics_report.txt",
-            mime="text/plain"
+                label="📥 Download Analytics Report",
+                data=analytics_report,
+                file_name="analytics_report.txt",
+                mime="text/plain"
             )
 
     with tab2:
@@ -1762,10 +1814,21 @@ def create_sidebar_analytics():
         st.markdown("#### Change Pattern Analysis")
         pattern_data = {
             'Pattern': ['Urban', 'Vegetation', 'Water'],
-            'Percentage': [45, 35, 20]
+            'Percentage': [50, 30, 20]  # Updated random values
         }
-        fig = px.pie(pattern_data, values='Percentage', names='Pattern', 
-                     hole=0.4, title='Change Distribution')
+        fig = px.pie(
+            pattern_data, 
+            values='Percentage', 
+            names='Pattern', 
+            hole=0.4, 
+            title='Change Distribution',
+            color='Pattern',  # Match colors to patterns
+            color_discrete_map={
+                'Urban': '#FF5733',  # Orange-red for Urban
+                'Vegetation': '#4CAF50',  # Green for Vegetation
+                'Water': '#3498DB'  # Blue for Water
+            }
+        )
         fig.update_layout(height=200, margin=dict(t=30, b=0))
         st.plotly_chart(fig, use_container_width=True, key="sidebar_pattern")
 
@@ -1774,7 +1837,6 @@ def create_sidebar_analytics():
         dates = pd.date_range(start='2024-01-01', periods=5, freq='M')
         trend_data = pd.DataFrame({
             'Date': dates,
-
             'Change Index': [0.2, 0.4, 0.3, 0.6, 0.5]
         })
         fig = px.line(trend_data, x='Date', y='Change Index', 
@@ -1795,18 +1857,12 @@ def create_sidebar_analytics():
 
         # Key Insights
         st.markdown("#### 🔍 Key Insights")
-        st.markdown("""        
+        st.markdown("""
         - **Major Changes:** Urban expansion detected
         - **Confidence Level:** High (75%)
         - **Pattern:** Linear development
         - **Impact:** Moderate environmental effect
         """)
 
-        # # Download Analytics
-        # if st.button("📥 Download Analytics Report"):
-        #     # Generate report logic here
-        #     st.success("Analytics report downloaded!")
-
 # Add this line where you want the analytics dashboard to appear in the sidebar
 create_sidebar_analytics()
-
