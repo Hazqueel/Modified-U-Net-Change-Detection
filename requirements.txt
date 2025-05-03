@@ -11,7 +11,7 @@ torch
 torchvision
 pandas
 plotly
-numpy
+numpy==1.23.5
 matplotlib
 opencv-python
 imgaug
