@@ -25,35 +25,7 @@ import cv2
 from datetime import datetime
 import plotly.graph_objects as go
 import numpy as np
-# import os
-# import streamlit as st # type: ignore
-# import base64
-# import matplotlib.pyplot as plt # type: ignore
-# from PIL import Image # type: ignore
-# from dotenv import load_dotenv # type: ignore
-# import google.generativeai as genai     # type: ignore  
-# import subprocess
-# from predict import * 
-# import mask
-# from fpdf import FPDF # type: ignore
-# from streamlit_image_comparison import image_comparison # type: ignore
-# from streamlit_drawable_canvas import st_canvas # type: ignore
-# from googletrans import Translator # type: ignore
-# import albumentations as A # type: ignore
-# from albumentations.pytorch import ToTensorV2 # type: ignore
-# import torch # type: ignore
-# from torchvision import transforms # type: ignore
-# import imgaug.augmenters as iaa # type: ignore
-# import pandas as pd # type: ignore
-# import plotly.express as px     # type: ignore
-# import json
-# import torch.nn.functional as F
-# import cv2
-# from datetime import datetime
-# import plotly.graph_objects as go
-# import numpy as np
-# from PIL import Image
-# import plotly.express as px
+
 # ---- Load Environment Variables ----
 load_dotenv()  # Load variables from .env file
 api_key = os.getenv("GEMINI_API_KEY")  # Get the API key from the .env file
